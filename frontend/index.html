@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with Ling</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Noto+Sans+SC:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="game-container">
+        <!-- 渲染层 -->
+        <div id="background-layer"><img src="" alt="Background"></div>
+        <div id="character-layer"><img id="character-sprite" src="" alt="Character"></div>
+
+        <!-- UI层 -->
+        <div id="ui-layer">
+            <div id="top-controls">
+                <div class="control-group">
+                    <button id="scene-btn">场景</button>
+                </div>
+                <div class="control-group">
+                    <input type="text" id="time-input" placeholder="设置时间...">
+                    <button id="time-btn">确定</button>
+                </div>
+            </div>
+
+            <div id="dialog-box">
+                <div id="dialog-header">
+                    <div id="speaker-info">
+                        <span id="speaker-name"></span>
+                        <span id="speaker-identity"></span>
+                    </div>
+                    <div id="emotion-tag" class="hidden"></div>
+                </div>
+                <div id="dialog-content">
+                    <p id="dialog-text"></p>
+                    
+                    <!-- 【核心修改】输入框被移动到这里 -->
+                    <input type="text" id="user-input" placeholder="和她说点什么..." autocomplete="off">
+                    
+                    <div id="thinking-indicator" class="hidden">...</div>
+                    
+                    <!-- 这个倒三角现在同时扮演“继续”和“发送”的角色 -->
+                    <div id="continue-indicator" class="hidden">▼</div>
+                </div>
+            </div>
+            
+            <!-- 旧的 #input-container 和 #send-btn 已被移除 -->
+        </div>
+    </div>
+    
+    <audio id="sfx-voice"></audio>
+    <script src="app.js"></script>
+</body>
+</html>

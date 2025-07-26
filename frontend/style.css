@@ -1,0 +1,206 @@
+/* --- 全局与字体设定 --- */
+* { 
+    box-sizing: border-box; 
+    /* 移除浏览器默认的点击高亮效果 */
+    -webkit-tap-highlight-color: transparent;
+}
+body { 
+    margin: 0; 
+    font-family: 'Noto Sans SC', 'Noto Sans JP', sans-serif; 
+    color: #2b2b2b; /* 默认文字颜色改为深灰，适应浅色背景 */
+    overflow: hidden;
+    user-select: none; /* 禁止文本选择，提升游戏感 */
+}
+
+/* --- 主容器 --- */
+#game-container { 
+    position: relative; 
+    width: 100vw; 
+    height: 100vh; 
+    background-color: #000; 
+}
+
+/* --- 核心图层布局 --- */
+#background-layer, #character-layer, #ui-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+#background-layer { z-index: 1; }
+#background-layer img { 
+    width: 100%; 
+    height: 100%; 
+    object-fit: cover; 
+    transition: opacity 0.5s ease-in-out; 
+}
+
+/* 【核心修改】立绘上移并置于对话框之下 */
+#character-layer {
+    display: flex;
+    justify-content: center;
+    align-items: flex-end;
+    /* 通过调整 bottom 来将立绘上移 */
+    bottom: 5vh; 
+    z-index: 3; 
+}
+#character-sprite { 
+    max-height: 95vh; /* 可以适当调大 */
+    max-width: 65vw;
+    transition: opacity 0.3s ease-in-out; 
+}
+
+#ui-layer {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 2.5vh 3vw;
+    /* 确保UI层在最顶层 */
+    z-index: 5; 
+}
+
+/* --- 顶部控制栏 (风格微调) --- */
+#top-controls {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    display: flex;
+    gap: 15px;
+}
+.control-group {
+    display: flex;
+    gap: 8px;
+    padding: 8px 12px;
+    border-radius: 20px;
+    /* 采用淡蓝色毛玻璃效果 */
+    background-color: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+#top-controls button, #top-controls input {
+    background: transparent;
+    border: none;
+    color: #0b4a7a;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 5px;
+}
+#top-controls button { cursor: pointer; }
+#top-controls button:hover { color: #5aa9e6; }
+#time-input { 
+    width: 120px; 
+    border-bottom: 2px solid #0b4a7a;
+}
+#time-input::placeholder { color: rgba(11, 74, 122, 0.6); }
+#time-input:focus { outline: none; }
+
+/* --- 对话框 (蔚蓝档案风格重做) --- */
+#dialog-box {
+    width: 100%;
+    max-width: 800px;
+    margin: 0 auto;
+    border-radius: 12px;
+    /* 核心：高透明度、高毛玻璃效果 */
+    background-color: rgba(255, 255, 255, 0.5);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1.5px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    color: #1a496b; /* 主要文字颜色 */
+}
+
+/* 移除旧的 dialog-header，样式直接给到 speaker-info */
+#dialog-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 25px;
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.5);
+}
+#speaker-name { font-size: 22px; font-weight: 700; color: #083c63; }
+#speaker-identity { display: none; /* 暂时隐藏，保持简洁 */ }
+#emotion-tag {
+    background-color: #0b4a7a;
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 15px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#dialog-content {
+    padding: 20px 25px;
+    min-height: 140px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+#dialog-text, #user-input {
+    font-size: 18px;
+    line-height: 1.7;
+    margin: 0;
+    width: 100%;
+    flex-grow: 1; /* 让它们占据可用空间 */
+}
+
+/* 【核心修改】输入框样式 */
+#user-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    padding: 20px 60px 20px 25px; /* 为右侧按钮留出空间 */
+    background: transparent;
+    border: none;
+    color: #1a496b;
+    outline: none;
+    opacity: 0; /* 默认隐藏 */
+    z-index: 10;
+    pointer-events: none; /* 默认不可交互 */
+}
+#user-input::placeholder {
+    color: rgba(26, 73, 107, 0.5);
+}
+
+/* 控制输入框何时显示 */
+body:not(.speaking) #user-input {
+    opacity: 1;
+    pointer-events: auto;
+}
+body:not(.speaking) #dialog-text {
+    opacity: 0; /* 当可以输入时，隐藏对话文本 */
+}
+
+/* 思考和继续指示器 */
+#thinking-indicator {
+    font-size: 24px;
+    font-weight: bold;
+    color: #0b4a7a;
+}
+/* 【核心修改】发送/继续按钮 */
+#continue-indicator {
+    position: absolute;
+    bottom: 15px;
+    right: 20px;
+    font-size: 24px;
+    color: #0b4a7a;
+    cursor: pointer;
+    transition: transform 0.2s ease, color 0.2s ease;
+    z-index: 15; /* 比输入框更高 */
+}
+#continue-indicator:hover {
+    transform: scale(1.2);
+    color: #5aa9e6;
+}
+#continue-indicator.hidden { display: none !important; }
+
+/* 禁用状态 */
+.disabled { 
+    pointer-events: none;
+    opacity: 0.6;
+}
+.hidden { display: none !important; }

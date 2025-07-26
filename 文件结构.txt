@@ -1,0 +1,47 @@
+chat/
+├── .env
+├── backend/
+│   ├── include/
+│   │   ├── AIEngine.hpp
+│   │   ├── ConfigManager.hpp
+│   │   ├── HTTPClient.hpp
+│   │   ├── Logger.hpp
+│   │   ├── SessionManager.hpp
+│   │   └── WebSocketServer.hpp
+│   └── src/
+│       ├── AIEngine.cpp
+│       ├── civetweb.c
+│       ├── ConfigManager.cpp
+│       ├── HTTPClient.cpp
+│       ├── Logger.cpp
+│       ├── main.cpp
+│       └── SessionManager.cpp
+├── backend_server
+├── build/
+│   ├── AIEngine.o
+│   ├── civetweb.o
+│   ├── ConfigManager.o
+│   ├── HTTPClient.o
+│   ├── Logger.o
+│   ├── main.o
+│   └── SessionManager.o
+├── frontend/
+│   ├── assets/
+│   │   ├── bg/
+│   │   │   └── default_room.jpg
+│   │   ├── char/
+│   │   │   └── ling/
+│   │   │       ├── angry.png
+│   │   │       ├── happy.png
+│   │   │       ├── love.png
+│   │   │       ├── neutral.png
+│   │   │       ├── playful.png
+│   │   │       ├── sad.png
+│   │   │       ├── shy.png
+│   │   │       └── surprised.png
+│   │   └── sfx/
+│   │       └── message_pop.mp3
+│   ├── app.js
+│   ├── index.html
+│   └── style.css
+└── makefile
