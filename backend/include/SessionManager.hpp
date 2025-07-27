@@ -12,7 +12,8 @@ public:
      */
     SessionManager(size_t max_history = 10); 
 
-    void addMessage(const std::string& role, const std::string& content);
+    void addMessage(const std::string& role, 
+                     const std::string& content);
     const std::vector<nlohmann::json>& getHistory() const;
     nlohmann::json getHistoryAsJson() const;
     void clearHistory();

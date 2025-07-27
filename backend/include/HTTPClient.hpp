@@ -15,11 +15,17 @@ public:
     HTTPClient(HTTPClient&&) = delete;
     HTTPClient& operator=(HTTPClient&&) = delete;
 
-    std::string post(const std::string& url, const std::string& data, const std::vector<std::string>& headers = {});
-    std::string get(const std::string& url, const std::vector<std::string>& headers = {});
+    std::string post(const std::string& url, 
+                  const std::string& data, 
+                  const std::vector<std::string>& headers = {});
+    std::string get(const std::string& url, 
+                 const std::vector<std::string>& headers = {});
 
 private:
-    std::string sendRequest(const std::string& url, const std::string& method, const std::string& data, const std::vector<std::string>& additional_headers);
+    std::string sendRequest(const std::string& url, 
+                          const std::string& method, 
+                          const std::string& data, 
+                          const std::vector<std::string>& additional_headers);
     static size_t WriteCallback(void* contents, size_t size, size_t nmemb, void* userp);
     
     CURL* curl_;
