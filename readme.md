@@ -1,10 +1,10 @@
 ### LingChat-C++-Termux
-    说起来这东西很早就想做了，直到放暑假才有时间调教ai
-    用deepseek和gemini做的，所有的模型都试过，最终是gemni 2.5 pro完成的
-    前端素材用的都是LingChat的，目前只在termux中编译和运行过（绝对不是因为没有电脑）
+   说起来这东西很早就想做了，直到放暑假才有时间调教ai
+用deepseek和gemini做的，所有的模型都试过，最终是gemni 2.5 pro完成的
+前端素材用的都是LingChat的，目前只在termux中编译和运行过（绝对不是因为没有电脑）
 ## 一、编译和运行
 # 1.工具链安装
-    首先我们需要安装编译的工具链以及依赖库
+   首先我们需要安装编译的工具链以及依赖库
 ``` bash
 pkg install curl libcurl clang make openssl nlohmann-json git
 ```
@@ -13,14 +13,29 @@ pkg install curl libcurl clang make openssl nlohmann-json git
 git clone https://github.com/yun-helpr/LingChat-C--Termux.git
 ```
 # 3.编译
-    由于一些原因，我这里并不能提供发行版，所以请自行编译
-    至于如何编译，仓库里有makefile,所以只需
+   由于一些原因，我这里并不能提供发行版，所以请自行编译
+   至于如何编译，仓库里有makefile,所以只需
 ```bash
 cd LingChat-C--Termux
 make
 ```
+   那么终端则会输出
+```terminal
+~/chat $ make
+mkdir -p build
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/WebSocketServer.cpp -o build/WebSocketServer.o
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/main.cpp -o build/main.o
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/ConfigManager.cpp -o build/ConfigManager.o
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/AIEngine.cpp -o build/AIEngine.o
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/HTTPClient.cpp -o build/HTTPClient.o
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/SessionManager.cpp -o build/SessionManager.o
+clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/Logger.cpp -o build/Logger.o
+clang -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -DOPENSSL_API_3_0 -DUSE_WEBSOCKET -c backend/src/civetweb.c -o build/civetweb.o
+clang++ build/WebSocketServer.o build/main.o build/ConfigManager.o build/AIEngine.o build/HTTPClient.o build/SessionManager.o build/Logger.o build/civetweb.o -L/data/data/com.termux/files/usr/lib -lcurl -lssl -lcrypto -lstdc++ -o backend_server
+~/chat $
+```
 # 4.修改.env配置文件
-    你需要修改api端点及key才能使用
+   你需要修改api端点及key才能使用
 ```env
 # ==================================================
 #                      配置文件
@@ -82,21 +97,22 @@ PROMPT_FILE="prompt.txt"
     
 ```
 # 5.运行
-    当你编译好之后，请执行以下命令
+   当你编译好之后，请执行以下命令
 ```bash
 ls
 ```
-    那么终端输出的应该是
+   那么终端输出的应该是
 ```terminal
 ~/chat $ ls
 backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  readme.md  文件结构.txt
 ~/chat $
 ```
-    我们可以看到有一个backend_server的可执行文件，所以
-```bahs
+   我们可以看到有一个backend_server的可执行文件，所以
+   
+```bash
 ./backend_server
 ```
-    便可以启动服务了，如果所有的流程都对的话，那么终端应该输出
+   便可以启动服务了，如果所有的流程都对的话，那么终端应该输出    
 ```terminal
 ~/chat $ ./backend_server
 [信息] CivetWeb 库已初始化 (SSL+WebSocket)。
@@ -131,7 +147,7 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 [信息] WebSocketServer: 发送 WebSocket 数据: {"payload":{"character_identity":"可爱的狼娘","character_name":"灵","ui_config":{"background_day":"assets/bg/白天.jpeg","background_night":"assets/bg/夜晚.jpg","character_sprite_dir":"assets...
 ```
 # 6.关闭
-    这个只要用过电脑的应该都会，你只需要同时按下ctrl+c即可停止程序，终端则会输出
+   这个只要用过电脑的应该都会，你只需要同时按下ctrl+c即可停止程序，终端则会输出
 ```terminal
 ~/chat $ ./backend_server
 [信息] CivetWeb 库已初始化 (SSL+WebSocket)。
@@ -159,9 +175,10 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 [信息] 程序已优雅关闭。
 ~/chat $
 ```
-    好了，到此为止这个小程序就运行起来了
-    由于代码是ai写的，尽管我进行了大量测试，但肯定还是有bug,如正则表达式匹配失效，输出日文(这也是为了ai语音合成，但也废弃了，我懒的删提示词和正则了)，如果有bug,可以先去问ai,搞不定了再问大佬(不要问我，因为我也半斤八两)
-    仓库中你可能会看到backend_server这个文件，那是我编译的，你可以选择试着运行，如果报错，还请自行编译
+   好了，到此为止这个小程序就运行起来了
+   由于代码是ai写的，尽管我进行了大量测试，但肯定还是有bug,如正则表达式匹配失效，输出日文(这也是为了ai语音合成，但也废弃了，我懒的删提示词和正则了)，如果有bug,可以先去问ai,搞不定了再问大佬(不要问我，因为我也半斤八两)
+   仓库中你可能会看到backend_server这个文件，那是我编译的，你可以选择试着运行，如果报错，还请自行编译
+   
 ## 二、文件结构
 ```文件结构
 ~/chat $ tree
