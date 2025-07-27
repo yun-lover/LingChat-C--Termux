@@ -52,12 +52,12 @@ DOCUMENT_ROOT="frontend"
 [API]
 API_BASE_URL="https://api.deepseek.com/v1" #这里填写api端点
 DEEPSEEK_API_KEY="your api key" # 这里填写你的apikey
-VOICE_API_URL="" #这里原本是打算做一个语音合成，但手机合成太慢了，所以废弃了。
+VOICE_API_URL="" # 这里原本是打算做一个语音合成，但手机合成太慢了，所以废弃了。
 
 [AI]
 MODEL="deepseek-chat" # 这里填写你所调用的模型名称
-TEMPERATURE=0.7 这里填写的数值表示模型思维的发散程度，越低发散程度越高，反之亦然。
-MAX_HISTORY_TURNS="10" 这里则数值则表示模型的记忆长度，由于目前市面上绝大多数大模型api都是无状态的，所以我们每次调用模型都需要将上文一同告诉模型，但这样太费token,所以要加以限制，所以模型只会记得包括你这句话的前十句话。
+TEMPERATURE=0.7 # 这里填写的数值表示模型思维的发散程度，越低发散程度越高，反之亦然。
+MAX_HISTORY_TURNS="10" # 这里则数值则表示模型的记忆长度，由于目前市面上绝大多数大模型api都是无状态的，所以我们每次调用模型都需要将上文一同告诉模型，但这样太费token,所以要加以限制，所以模型只会记得包括你这句话的前十句话。
 
 [Character]
 CHARACTER_NAME="灵" # 这里是ai的名称，具体如何体现请看web界面
@@ -88,7 +88,7 @@ SFX_DIR="assets/sfx/" #这里是音效文件夹，具体作用可见下文的音
 害怕=sad
 厌恶=angry
 羞耻=shy
-旁白=兴奋 旁边讲话时的立绘，我不想做多人物了
+旁白=兴奋  # 旁边讲话时的立绘，我不想做多人物了
 default=兴奋 # 当情绪标签无法识别时默认返回的立绘
 
 [EmotionSfxMap] # 这里是音效情绪标签映射表，工作逻辑同上，文件夹是assets/sfx/
