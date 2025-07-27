@@ -1,47 +1,72 @@
-chat/
-├── .env
-├── backend/
-│   ├── include/
-│   │   ├── AIEngine.hpp
-│   │   ├── ConfigManager.hpp
-│   │   ├── HTTPClient.hpp
-│   │   ├── Logger.hpp
-│   │   ├── SessionManager.hpp
-│   │   └── WebSocketServer.hpp
-│   └── src/
-│       ├── AIEngine.cpp
-│       ├── civetweb.c
-│       ├── ConfigManager.cpp
-│       ├── HTTPClient.cpp
-│       ├── Logger.cpp
-│       ├── main.cpp
-│       └── SessionManager.cpp
+~/chat $ tree
+.
+├── backend
+│   ├── include
+│   │   ├── AIEngine.hpp
+│   │   ├── ConfigManager.hpp
+│   │   ├── HTTPClient.hpp
+│   │   ├── Logger.hpp
+│   │   ├── SessionManager.hpp
+│   │   ├── WebSocketServer.hpp
+│   │   ├── civetweb.c
+│   │   └── civetweb.h
+│   └── src
+│       ├── AIEngine.cpp
+│       ├── ConfigManager.cpp
+│       ├── HTTPClient.cpp
+│       ├── Logger.cpp
+│       ├── SessionManager.cpp
+│       ├── WebSocketServer.cpp
+│       ├── civetweb.c
+│       ├── handle_form.inl
+│       ├── http2.inl
+│       ├── main.cpp
+│       ├── match.inl
+│       ├── md5.inl
+│       ├── mod_duktape.inl
+│       ├── mod_lua.inl
+│       ├── mod_lua_shared.inl
+│       ├── mod_mbedtls.inl
+│       ├── mod_zlib.inl
+│       ├── openssl_dl.inl
+│       ├── response.inl
+│       ├── sha1.inl
+│       ├── sort.inl
+│       ├── timer.inl
+│       └── wolfssl_extras.inl
 ├── backend_server
-├── build/
-│   ├── AIEngine.o
-│   ├── civetweb.o
-│   ├── ConfigManager.o
-│   ├── HTTPClient.o
-│   ├── Logger.o
-│   ├── main.o
-│   └── SessionManager.o
-├── frontend/
-│   ├── assets/
-│   │   ├── bg/
-│   │   │   └── default_room.jpg
-│   │   ├── char/
-│   │   │   └── ling/
-│   │   │       ├── angry.png
-│   │   │       ├── happy.png
-│   │   │       ├── love.png
-│   │   │       ├── neutral.png
-│   │   │       ├── playful.png
-│   │   │       ├── sad.png
-│   │   │       ├── shy.png
-│   │   │       └── surprised.png
-│   │   └── sfx/
-│   │       └── message_pop.mp3
-│   ├── app.js
-│   ├── index.html
-│   └── style.css
-└── makefile
+├── build
+│   ├── AIEngine.o
+│   ├── ConfigManager.o
+│   ├── HTTPClient.o
+│   ├── Logger.o
+│   ├── SessionManager.o
+│   ├── WebSocketServer.o
+│   ├── civetweb.o
+│   └── main.o
+├── frontend
+│   ├── app.js
+│   ├── assets
+│   │   ├── bg
+│   │   │   ├── 夜晚.jpg
+│   │   │   └── 白天.jpeg
+│   │   ├── char
+│   │   │   └── ling
+│   │   │       ├── 伤心.png
+│   │   │       ├── 兴奋.png
+│   │   │       ├── 厌恶.png
+│   │   │       ├── 头像.png
+│   │   │       ├── 害怕.png
+│   │   │       └── 害羞.png
+│   │   └── sfx
+│   │       └── 喜爱.wav
+│   ├── index.html
+│   ├── lib
+│   └── style.css
+├── makefile
+├── prompt.txt
+├── readme.md
+└── 文件结构.txt
+
+12 directories, 56 files
+~/chat $
