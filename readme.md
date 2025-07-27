@@ -26,16 +26,15 @@ make
    那么终端则会输出
 ```terminal
 ~/chat $ make
-mkdir -p build
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/WebSocketServer.cpp -o build/WebSocketServer.o
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/main.cpp -o build/main.o
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/ConfigManager.cpp -o build/ConfigManager.o
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/AIEngine.cpp -o build/AIEngine.o
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/HTTPClient.cpp -o build/HTTPClient.o
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/SessionManager.cpp -o build/SessionManager.o
-clang++ -std=c++17 -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -c backend/src/Logger.cpp -o build/Logger.o
-clang -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -DOPENSSL_API_3_0 -DUSE_WEBSOCKET -c backend/src/civetweb.c -o build/civetweb.o
-clang++ build/WebSocketServer.o build/main.o build/ConfigManager.o build/AIEngine.o build/HTTPClient.o build/SessionManager.o build/Logger.o build/civetweb.o -L/data/data/com.termux/files/usr/lib -lcurl -lssl -lcrypto -lstdc++ -o backend_server
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/AIEngine.d -c backend/src/AIEngine.cpp -o build/obj/AIEngine.o
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/ConfigManager.d -c backend/src/ConfigManager.cpp -o build/obj/ConfigManager.o
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/HTTPClient.d -c backend/src/HTTPClient.cpp -o build/obj/HTTPClient.o
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/Logger.d -c backend/src/Logger.cpp -o build/obj/Logger.o
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/SessionManager.d -c backend/src/SessionManager.cpp -o build/obj/SessionManager.o
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/WebSocketServer.d -c backend/src/WebSocketServer.cpp -o build/obj/WebSocketServer.o
+arm-linux-androideabi-clang++ -std=c++17 -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -MMD -MP -MF build/dep/main.d -c backend/src/main.cpp -o build/obj/main.o
+cc -Ibackend/include -Wall  -O0 -g3 -DDEBUG -I/data/data/com.termux/files/usr/include -DOPENSSL_API_3_0 -DUSE_WEBSOCKET -MMD -MP -MF build/dep/civetweb.d -c backend/src/civetweb.c -o build/obj/civetweb.o
+arm-linux-androideabi-clang++ -L/data/data/com.termux/files/usr/lib build/obj/AIEngine.o build/obj/ConfigManager.o build/obj/HTTPClient.o build/obj/Logger.o build/obj/SessionManager.o build/obj/WebSocketServer.o build/obj/main.o build/obj/civetweb.o -lcurl -lssl -lcrypto -lpthread -o build/bin/backend_server
 ~/chat $
 ```
 ### 4.修改.env配置文件
@@ -103,19 +102,9 @@ PROMPT_FILE="prompt.txt"
 ### 5.运行
    当你编译好之后，请执行以下命令
 ```bash
-ls
+make run
 ```
-   那么终端输出的应该是
-```terminal
-~/chat $ ls
-backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  readme.md  文件结构.txt
-~/chat $
-```
-   我们可以看到有一个backend_server的可执行文件，所以
-   
-```bash
-./backend_server
-```
+
    便可以启动服务了，如果所有的流程都对的话，那么终端应该输出    
 ```terminal
 ~/chat $ ./backend_server
@@ -131,10 +120,9 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 [信息] WebSocketServer: WebSocket 端点已注册: /websocket
 [信息] 服务器已成功启动。主线程进入等待模式。按 Ctrl+C 关闭。
 ```
-   接下来就是访问web界面了，在浏览器的地址栏输入 **http://localhost:8765/ ** ,那么你就可以看到前端并进行对话了
-   那么此时termux终端会输出
-   由于个人原因，立绘和音效的文件并不齐全，所以请到LingChat的仓库获取立绘文件和音频文件
-   然后再到env配置文件中修改映射表
+
+   接下来就是访问web界面了，在浏览器的地址栏输入 http://localhost:8765/ ,那么你就可以看到前端并进行对话了\n
+   那么此时termux终端会输出日志
 ```terminal
 ~/chat $ ./backend_server
 [信息] CivetWeb 库已初始化 (SSL+WebSocket)。
@@ -152,6 +140,9 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 [信息] WebSocketServer: WebSocket 连接已就绪，并已清空会话历史。
 [信息] WebSocketServer: 发送 WebSocket 数据: {"payload":{"character_identity":"可爱的狼娘","character_name":"灵","ui_config":{"background_day":"assets/bg/白天.jpeg","background_night":"assets/bg/夜晚.jpg","character_sprite_dir":"assets...
 ```
+   注意，可能会输出一些类似\n
+    *** 1753620119.065422618 2925130916 mg_start2:20630: [listening_ports] -> [8765] 
+   这样的日志，可以忽略，有能力的可以看
 ### 6.关闭
    这个只要用过电脑的应该都会，你只需要同时按下ctrl+c即可停止程序，终端则会输出
 ```terminal
@@ -225,14 +216,24 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 │       └── wolfssl_extras.inl
 ├── backend_server
 ├── build
-│   ├── AIEngine.o
-│   ├── ConfigManager.o
-│   ├── HTTPClient.o
-│   ├── Logger.o
-│   ├── SessionManager.o
-│   ├── WebSocketServer.o
-│   ├── civetweb.o
-│   └── main.o
+│   ├── dep
+│   │   ├── AIEngine.d
+│   │   ├── ConfigManager.d
+│   │   ├── HTTPClient.d
+│   │   ├── Logger.d
+│   │   ├── SessionManager.d
+│   │   ├── WebSocketServer.d
+│   │   ├── civetweb.d
+│   │   └── main.d
+│   └── obj
+│       ├── AIEngine.o
+│       ├── ConfigManager.o
+│       ├── HTTPClient.o
+│       ├── Logger.o
+│       ├── SessionManager.o
+│       ├── WebSocketServer.o
+│       ├── civetweb.o
+│       └── main.o
 ├── frontend
 │   ├── app.js
 │   ├── assets
@@ -250,13 +251,12 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 │   │   └── sfx
 │   │       └── 喜爱.wav
 │   ├── index.html
-│   ├── lib
 │   └── style.css
 ├── makefile
 ├── prompt.txt
 ├── readme.md
 └── 文件结构.txt
 
-12 directories, 56 files
+13 directories, 64 files
 ~/chat $
 ```

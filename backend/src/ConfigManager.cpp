@@ -56,7 +56,7 @@ void ConfigManager::parseFile(const std::string& filename) {
         line = trim(line);
         if (line.empty()) continue;
 
-        // **【核心修正】**: 使用 line.front() 而不是 line == '['
+        // 使用 line.front() 而不是 line == '['
         if (line.front() == '[' && line.back() == ']') {
             current_section = trim(line.substr(1, line.length() - 2));
             continue;

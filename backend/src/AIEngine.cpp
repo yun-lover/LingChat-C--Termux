@@ -33,7 +33,7 @@ std::string AIEngine::generateResponse(const nlohmann::json& messages_payload) {
     }
 }
 
-// **【新增】** 语音合成功能的实现
+// 语音合成功能的实现
 std::string AIEngine::synthesizeSpeech(const std::string& text_jp, const std::string& voice_api_url) {
     if (voice_api_url.empty() || text_jp.empty()) {
         return ""; // 如果没有配置API或文本为空，直接返回

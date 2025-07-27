@@ -2,7 +2,7 @@
 #define WEBSOCKET_SERVER_HPP
 
 #include "civetweb.h"
-#include "SessionManager.hpp" // 【修改】确保包含了头文件
+#include "SessionManager.hpp" 
 #include <string>
 #include <mutex>
 
@@ -40,7 +40,7 @@ private:
     mg_context* ctx_ = nullptr;
     ConfigManager& config_;
     AIEngine& engine_;
-    SessionManager session_manager_; // 【修改】SessionManager 变为对象成员
+    SessionManager session_manager_; 
 
     mg_connection* active_connection_ptr_ = nullptr;
     mutable std::mutex connection_mutex_;

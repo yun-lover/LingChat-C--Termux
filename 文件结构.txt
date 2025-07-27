@@ -36,14 +36,24 @@
 │       └── wolfssl_extras.inl
 ├── backend_server
 ├── build
-│   ├── AIEngine.o
-│   ├── ConfigManager.o
-│   ├── HTTPClient.o
-│   ├── Logger.o
-│   ├── SessionManager.o
-│   ├── WebSocketServer.o
-│   ├── civetweb.o
-│   └── main.o
+│   ├── dep
+│   │   ├── AIEngine.d
+│   │   ├── ConfigManager.d
+│   │   ├── HTTPClient.d
+│   │   ├── Logger.d
+│   │   ├── SessionManager.d
+│   │   ├── WebSocketServer.d
+│   │   ├── civetweb.d
+│   │   └── main.d
+│   └── obj
+│       ├── AIEngine.o
+│       ├── ConfigManager.o
+│       ├── HTTPClient.o
+│       ├── Logger.o
+│       ├── SessionManager.o
+│       ├── WebSocketServer.o
+│       ├── civetweb.o
+│       └── main.o
 ├── frontend
 │   ├── app.js
 │   ├── assets
@@ -61,12 +71,11 @@
 │   │   └── sfx
 │   │       └── 喜爱.wav
 │   ├── index.html
-│   ├── lib
 │   └── style.css
 ├── makefile
 ├── prompt.txt
 ├── readme.md
 └── 文件结构.txt
 
-12 directories, 56 files
+13 directories, 64 files
 ~/chat $

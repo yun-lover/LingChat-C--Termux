@@ -16,7 +16,7 @@ public:
     std::string synthesizeSpeech(const std::string& text_jp, 
                                  const std::string& voice_api_url);
 
-    // 【核心修复】移除这个不存在的函数调用
+    // 移除这个不存在的函数调用
     // void setApiKey(const std::string& api_key) { httpClient_.setApiKey(api_key); }
 
 private:

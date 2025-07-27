@@ -56,7 +56,7 @@ int main() {
 
         std::cout << "[信息] 服务器已成功启动。主线程进入等待模式。按 Ctrl+C 关闭。" << std::endl;
 
-        // 【核心修复】主循环检查全局退出标志
+        // 主循环检查全局退出标志
         while (!g_exit_flag) {
             // 短暂休眠以降低CPU占用
             std::this_thread::sleep_for(std::chrono::milliseconds(100));
