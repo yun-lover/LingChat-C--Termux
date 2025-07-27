@@ -131,8 +131,8 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 [信息] WebSocketServer: WebSocket 端点已注册: /websocket
 [信息] 服务器已成功启动。主线程进入等待模式。按 Ctrl+C 关闭。
 ```
-    接下来就是访问web界面了，在浏览器的地址栏输入 **http://localhost:8765/** ,那么你就可以看到前端并进行对话了
-    那么此时termux终端会输出
+   接下来就是访问web界面了，在浏览器的地址栏输入 **http://localhost:8765/** ,那么你就可以看到前端并进行对话了
+   那么此时termux终端会输出
 ```terminal
 ~/chat $ ./backend_server
 [信息] CivetWeb 库已初始化 (SSL+WebSocket)。
