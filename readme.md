@@ -12,11 +12,15 @@ pkg install curl libcurl clang make openssl nlohmann-json git
 ```bash
 git clone https://github.com/yun-helpr/LingChat-C--Termux.git
 ```
+这里我们可以重命名一下文件夹
+```bash
+mv LingChat-C--Termux chat
+```
 # 3.编译
    由于一些原因，我这里并不能提供发行版，所以请自行编译
    至于如何编译，仓库里有makefile,所以只需
 ```bash
-cd LingChat-C--Termux
+cd chat
 make
 ```
    那么终端则会输出
