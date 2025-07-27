@@ -1,14 +1,14 @@
-### LingChat-C++-Termux
+# LingChat-C++-Termux
    说起来这东西很早就想做了，直到放暑假才有时间调教ai
 用deepseek和gemini做的，所有的模型都试过，最终是gemni 2.5 pro完成的
 前端素材用的都是LingChat的，目前只在termux中编译和运行过（绝对不是因为没有电脑）
 ## 一、编译和运行
-# 1.工具链安装
+### 1.工具链安装
    首先我们需要安装编译的工具链以及依赖库
 ``` bash
 pkg install curl libcurl clang make openssl nlohmann-json git
 ```
-# 2.克隆仓库以获取文件
+### 2.克隆仓库以获取文件
 ```bash
 git clone https://github.com/yun-helpr/LingChat-C--Termux.git
 ```
@@ -16,7 +16,7 @@ git clone https://github.com/yun-helpr/LingChat-C--Termux.git
 ```bash
 mv LingChat-C--Termux chat
 ```
-# 3.编译
+### 3.编译
    由于一些原因，我这里并不能提供发行版，所以请自行编译
    至于如何编译，仓库里有makefile,所以只需
 ```bash
@@ -38,7 +38,7 @@ clang -Ibackend/include -I/data/data/com.termux/files/usr/include -Wall -O2 -DOP
 clang++ build/WebSocketServer.o build/main.o build/ConfigManager.o build/AIEngine.o build/HTTPClient.o build/SessionManager.o build/Logger.o build/civetweb.o -L/data/data/com.termux/files/usr/lib -lcurl -lssl -lcrypto -lstdc++ -o backend_server
 ~/chat $
 ```
-# 4.修改.env配置文件
+### 4.修改.env配置文件
    你需要修改api端点及key才能使用
 ```env
 # ==================================================
@@ -100,7 +100,7 @@ default=兴奋 # 当情绪标签无法识别时默认返回的立绘
 PROMPT_FILE="prompt.txt"
     
 ```
-# 5.运行
+### 5.运行
    当你编译好之后，请执行以下命令
 ```bash
 ls
@@ -150,7 +150,7 @@ backend  backend_server  build  config  docs  frontend  makefile  prompt.txt  re
 [信息] WebSocketServer: WebSocket 连接已就绪，并已清空会话历史。
 [信息] WebSocketServer: 发送 WebSocket 数据: {"payload":{"character_identity":"可爱的狼娘","character_name":"灵","ui_config":{"background_day":"assets/bg/白天.jpeg","background_night":"assets/bg/夜晚.jpg","character_sprite_dir":"assets...
 ```
-# 6.关闭
+### 6.关闭
    这个只要用过电脑的应该都会，你只需要同时按下ctrl+c即可停止程序，终端则会输出
 ```terminal
 ~/chat $ ./backend_server
