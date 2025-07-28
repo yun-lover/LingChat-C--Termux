@@ -47,7 +47,7 @@ OBJS = $(OBJS_CXX) $(OBJS_C)
 DEPS = $(patsubst $(SRC_DIR)/%.cpp,$(DEP_DIR)/%.d,$(SRCS_CXX)) \
        $(patsubst $(SRC_DIR)/%.c,$(DEP_DIR)/%.d,$(SRCS_C))
 
-# ==== 修正：可执行文件在项目根目录 ====
+# ==== 可执行文件在项目根目录 ====
 TARGET = backend_server
 
 # 外部库路径（支持环境变量覆盖）
