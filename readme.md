@@ -38,28 +38,37 @@ arm-linux-androideabi-clang++ -L/data/data/com.termux/files/usr/lib build/obj/AI
 ~/chat $
 ```
 ### 4.修改.env配置文件
-   你需要修改api端点及key才能使用
+   你需要修改api端点及key才能使用,我添加了RAG系统，让ai有了永久记忆，可在env中配置(embedding模型的配置和RAG系统的启用，默认关闭)
 ```env
 # ==================================================
 #                      配置文件
 # ==================================================
 
 [Server]
-BACKEND_PORT="8765"
+BACKEND_PORT="8765" 
 DOCUMENT_ROOT="frontend"
 
 [API]
 API_BASE_URL="https://api.deepseek.com/v1" #这里填写api端点
 DEEPSEEK_API_KEY="your api key" # 这里填写你的apikey
-VOICE_API_URL="" # 这里原本是打算做一个语音合成，但手机合成太慢了，所以废弃了。
+VOICE_API_URL="" #这里原本是打算做一个语音合成，但手机合成太慢了，所以废弃了。
+EMBEDDING_MODEL = "text-embedding-v2" #这里填写embedding模型的名称，未开启RAG的可以不填，这里的模型名称并不是真实可调用的
+EMBEDDING_API_URL = "https://api.deepseek.com/v1"  # 这里填写embedding的api端点，未开启RAG的可以不填，这里的api端点也并不是真实可调用的
+EMBEDDING_VECTOR_DIMENSION = "1024" # 这里填写embedding模型的向量的维度，这个由模型决定，请自行查询自己所使用的embedding模型的向量的维度，这里的向量的维度并不是真实的
+
+[Database]
+# 轻量级RAG的记忆存储文件，它将自动被创建
+MEMORY_DB_PATH = "memory.json"
 
 [AI]
 MODEL="deepseek-chat" # 这里填写你所调用的模型名称
 TEMPERATURE=0.7 # 这里填写的数值表示模型思维的发散程度，越低发散程度越高，反之亦然。
-MAX_HISTORY_TURNS="10" # 这里则数值则表示模型的记忆长度，由于目前市面上绝大多数大模型api都是无状态的，所以我们每次调用模型都需要将上文一同告诉模型，但这样太费token,所以要加以限制，所以模型只会记得包括你这句话的前十句话。
+MAX_HISTORY_TURNS="10" # 这里则数值则表示模型的记忆长度，由于目前市面上绝大多数大模型api都是无状态的，所以我们每次调用模型都需要将上文一同告诉模型，但这样太费token,所以要加以限制，所以模型只会记得包括你这句话的前十句话，但不包括RAG系统。
+ENABLE_RAG = false # 这里控制RAG的开关
+
 
 [Character]
-CHARACTER_NAME="灵" # 这里是ai的名称，具体如何体现请看web界面
+CHARACTER_NAME="钦灵" # 这里是ai的名称，具体如何体现请看web界面
 CHARACTER_IDENTITY="可爱的狼娘" # 这里是ai的身份，具体如何体现请看web界面
 
 [UI]
@@ -87,7 +96,7 @@ SFX_DIR="assets/sfx/" #这里是音效文件夹，具体作用可见下文的音
 害怕=sad
 厌恶=angry
 羞耻=shy
-旁白=兴奋  # 旁边讲话时的立绘，我不想做多人物了
+旁白=兴奋 # 旁边讲话时的立绘，我不想做多人物了
 default=兴奋 # 当情绪标签无法识别时默认返回的立绘
 
 [EmotionSfxMap] # 这里是音效情绪标签映射表，工作逻辑同上，文件夹是assets/sfx/
@@ -186,6 +195,7 @@ make run
 │   │   ├── ConfigManager.hpp
 │   │   ├── HTTPClient.hpp
 │   │   ├── Logger.hpp
+│   │   ├── MemoryManager.hpp
 │   │   ├── SessionManager.hpp
 │   │   ├── WebSocketServer.hpp
 │   │   ├── civetweb.c
@@ -195,6 +205,7 @@ make run
 │       ├── ConfigManager.cpp
 │       ├── HTTPClient.cpp
 │       ├── Logger.cpp
+│       ├── MemoryManager.cpp
 │       ├── SessionManager.cpp
 │       ├── WebSocketServer.cpp
 │       ├── civetweb.c
@@ -221,6 +232,7 @@ make run
 │   │   ├── ConfigManager.d
 │   │   ├── HTTPClient.d
 │   │   ├── Logger.d
+│   │   ├── MemoryManager.d
 │   │   ├── SessionManager.d
 │   │   ├── WebSocketServer.d
 │   │   ├── civetweb.d
@@ -230,6 +242,7 @@ make run
 │       ├── ConfigManager.o
 │       ├── HTTPClient.o
 │       ├── Logger.o
+│       ├── MemoryManager.o
 │       ├── SessionManager.o
 │       ├── WebSocketServer.o
 │       ├── civetweb.o
@@ -253,10 +266,11 @@ make run
 │   ├── index.html
 │   └── style.css
 ├── makefile
+├── memory.json
 ├── prompt.txt
 ├── readme.md
 └── 文件结构.txt
 
-13 directories, 64 files
+13 directories, 69 files
 ~/chat $
 ```
