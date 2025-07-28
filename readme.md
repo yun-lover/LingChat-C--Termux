@@ -1,7 +1,6 @@
 # LingChat-C++-Termux
-   说起来这东西很早就想做了，直到放暑假才有时间调教ai
-用deepseek和gemini做的，所有的模型都试过，最终是gemni 2.5 pro完成的
-前端素材用的都是LingChat的，目前只在termux中编译和运行过（绝对不是因为没有电脑）
+   本应用现仅在termux环境中编译和运行过，其他linux环境请自行修改makefile中的库名，以及依赖库、库的路径等  
+   本项目是LingChat的二创，有兴趣的可以前往LingChat的仓库(https://github.com/SlimeBoyOwO/LingChat)  
 ## 一、编译和运行
 ### 1.工具链安装
    首先我们需要安装编译的工具链以及依赖库
@@ -23,6 +22,7 @@ mv LingChat-C--Termux chat
 cd chat
 make
 ```
+   我在makefile里加了依赖库验证，所以没有装的会提醒  
    那么终端则会输出
 ```terminal
 ~/chat $ make
