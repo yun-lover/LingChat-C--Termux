@@ -32,10 +32,15 @@ int main() {
         // 1. 加载配置
         ConfigManager config_manager;
 
-        // 2. 检查 API 密钥
-        const std::string api_key = config_manager.get("API", "DEEPSEEK_API_KEY", "");
+        // 2. 检查主聊天LLM的 API 密钥 (快速失败机制)
+        // ======================= FIX =======================
+        // 错误原因：检查了错误的配置节 [API]
+        // 修正方法：现在从新的配置节 [API_LLM] 中读取密钥
+        const std::string api_key = config_manager.get("API_LLM", "DEEPSEEK_API_KEY", "");
+        // ===================================================
+        
         if (api_key.empty() || api_key == "your_deepseek_api_key_here") {
-            std::cerr << "[致命错误] DEEPSEEK_API_KEY 未在 .env 文件中设置或无效！" << std::endl;
+            std::cerr << "[致命错误] DEEPSEEK_API_KEY 未在 .env 文件的 [API_LLM] 节中设置或无效！" << std::endl;
             mg_exit_library();
             return 1;
         }
