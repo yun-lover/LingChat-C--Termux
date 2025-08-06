@@ -207,7 +207,7 @@ int WebSocketServer::handle_websocket_data(mg_connection* conn, int flags, char*
             }
 
             std::string audio_url = engine_.synthesizeSpeech(
-                text_jp, config_.get("API", "VOICE_API_URL", "")
+                text_jp, config_.get("Voice", "VOICE_API_URL", "")
             );
             segments.push_back({
                 {"expression", expression}, {"action", action},

@@ -7,6 +7,8 @@
 #include <csignal>
 #include <thread>
 #include <chrono>
+#include <algorithm>
+#include <string>
 
 static volatile bool g_exit_flag = false;
 
@@ -29,24 +31,31 @@ int main() {
     std::cout << "[信息] CivetWeb 库已初始化。" << std::endl;
 
     try {
-        // 1. 加载配置
+        // 0. 加载配置
         ConfigManager config_manager;
 
         // 2. 检查主聊天LLM的 API 密钥 (快速失败机制)
-        // ======================= FIX =======================
-        // 错误原因：检查了错误的配置节 [API]
-        // 修正方法：现在从新的配置节 [API_LLM] 中读取密钥
         const std::string api_key = config_manager.get("API_LLM", "DEEPSEEK_API_KEY", "");
-        // ===================================================
-        
         if (api_key.empty() || api_key == "your_deepseek_api_key_here") {
             std::cerr << "[致命错误] DEEPSEEK_API_KEY 未在 .env 文件的 [API_LLM] 节中设置或无效！" << std::endl;
             mg_exit_library();
             return 1;
         }
+
+        // 2.1. 如果RAG已启用，则检查Embedding模型的API密钥
+        std::string rag_flag_str = config_manager.get("AI", "ENABLE_RAG", "false");
+        std::transform(rag_flag_str.begin(), rag_flag_str.end(), rag_flag_str.begin(), 
+                       [](unsigned char c){ return std::tolower(c); });
+        if (rag_flag_str == "true") {
+            const std::string embedding_api_key = config_manager.get("API_EMBEDDING", "EMBEDDING_API_KEY", "");
+            if (embedding_api_key.empty() || embedding_api_key == "your_embedding_api_key_here") {
+                std::cerr << "[致命错误] RAG已启用，但 EMBEDDING_API_KEY 未在 .env 文件的 [API_EMBEDDING] 节中设置或无效！" << std::endl;
+                mg_exit_library();
+                return 1;
+            }
+        }
         
         // 3. 初始化并启动 WebSocket 服务器
-        // 只需创建 WebSocketServer，它会负责创建其他所有服务。
         WebSocketServer ws_server(config_manager);
         ws_server.start();
 

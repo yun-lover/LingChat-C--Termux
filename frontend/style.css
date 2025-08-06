@@ -1,23 +1,23 @@
 /* --- 全局与字体设定 --- */
-* { 
-    box-sizing: border-box; 
+* {
+    box-sizing: border-box;
     /* 移除浏览器默认的点击高亮效果 */
     -webkit-tap-highlight-color: transparent;
 }
-body { 
-    margin: 0; 
-    font-family: 'Noto Sans SC', 'Noto Sans JP', sans-serif; 
+body {
+    margin: 0;
+    font-family: 'Noto Sans SC', 'Noto Sans JP', sans-serif;
     color: #2b2b2b; /* 默认文字颜色改为深灰，适应浅色背景 */
     overflow: hidden;
     user-select: none; /* 禁止文本选择，提升游戏感 */
 }
 
 /* --- 主容器 --- */
-#game-container { 
-    position: relative; 
-    width: 100vw; 
-    height: 100vh; 
-    background-color: #000; 
+#game-container {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
 }
 
 /* --- 核心图层布局 --- */
@@ -30,11 +30,11 @@ body {
 }
 
 #background-layer { z-index: 1; }
-#background-layer img { 
-    width: 100%; 
-    height: 100%; 
-    object-fit: cover; 
-    transition: opacity 0.5s ease-in-out; 
+#background-layer img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.5s ease-in-out;
 }
 
 /* 【核心修改】立绘上移并置于对话框之下 */
@@ -43,38 +43,41 @@ body {
     justify-content: center;
     align-items: flex-end;
     /* 通过调整 bottom 来将立绘上移 */
-    bottom: 5vh; 
-    z-index: 3; 
+    bottom: 5vh;
+    z-index: 3;
+    /* 防止立绘过大时超出屏幕导致布局问题 */
+    pointer-events: none;
 }
-#character-sprite { 
+#character-sprite {
     max-height: 95vh; /* 可以适当调大 */
     max-width: 65vw;
-    transition: opacity 0.3s ease-in-out; 
+    transition: opacity 0.3s ease-in-out;
 }
 
 #ui-layer {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    padding: 2.5vh 3vw;
-    /* 确保UI层在最顶层 */
-    z-index: 5; 
+    /* 调整内边距，使用vw和vh单位以适应不同屏幕 */
+    padding: 2vh 3vw;
+    z-index: 5;
 }
 
 /* --- 顶部控制栏 (风格微调) --- */
 #top-controls {
     position: absolute;
-    top: 20px;
-    left: 20px;
+    top: 15px; /* 减小与顶部的距离 */
+    left: 50%; /* 先移动到中间 */
+    transform: translateX(-50%); /* 再精确居中 */
     display: flex;
     gap: 15px;
+    z-index: 10; /* 确保在UI层之上 */
 }
 .control-group {
     display: flex;
     gap: 8px;
     padding: 8px 12px;
     border-radius: 20px;
-    /* 采用淡蓝色毛玻璃效果 */
     background-color: rgba(255, 255, 255, 0.2);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.4);
@@ -90,12 +93,13 @@ body {
 }
 #top-controls button { cursor: pointer; }
 #top-controls button:hover { color: #5aa9e6; }
-#time-input { 
-    width: 120px; 
+#time-input {
+    width: 120px;
     border-bottom: 2px solid #0b4a7a;
 }
 #time-input::placeholder { color: rgba(11, 74, 122, 0.6); }
 #time-input:focus { outline: none; }
+
 
 /* --- 对话框 (蔚蓝档案风格重做) --- */
 #dialog-box {
@@ -103,16 +107,14 @@ body {
     max-width: 800px;
     margin: 0 auto;
     border-radius: 12px;
-    /* 核心：高透明度、高毛玻璃效果 */
     background-color: rgba(255, 255, 255, 0.5);
     backdrop-filter: blur(15px);
     -webkit-backdrop-filter: blur(15px);
     border: 1.5px solid rgba(255, 255, 255, 0.7);
     box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    color: #1a496b; /* 主要文字颜色 */
+    color: #1a496b;
 }
 
-/* 移除旧的 dialog-header，样式直接给到 speaker-info */
 #dialog-header {
     display: flex;
     justify-content: space-between;
@@ -121,7 +123,7 @@ body {
     border-bottom: 1.5px solid rgba(255, 255, 255, 0.5);
 }
 #speaker-name { font-size: 22px; font-weight: 700; color: #083c63; }
-#speaker-identity { display: none; /* 暂时隐藏，保持简洁 */ }
+#speaker-identity { display: none; }
 #emotion-tag {
     background-color: #0b4a7a;
     color: #fff;
@@ -143,36 +145,35 @@ body {
     line-height: 1.7;
     margin: 0;
     width: 100%;
-    flex-grow: 1; /* 让它们占据可用空间 */
+    flex-grow: 1;
 }
 
-/* 【核心修改】输入框样式 */
+/* 输入框样式 */
 #user-input {
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    padding: 20px 60px 20px 25px; /* 为右侧按钮留出空间 */
+    padding: 20px 60px 20px 25px;
     background: transparent;
     border: none;
     color: #1a496b;
     outline: none;
-    opacity: 0; /* 默认隐藏 */
+    opacity: 0;
     z-index: 10;
-    pointer-events: none; /* 默认不可交互 */
+    pointer-events: none;
 }
 #user-input::placeholder {
     color: rgba(26, 73, 107, 0.5);
 }
 
-/* 控制输入框何时显示 */
 body:not(.speaking) #user-input {
     opacity: 1;
     pointer-events: auto;
 }
 body:not(.speaking) #dialog-text {
-    opacity: 0; /* 当可以输入时，隐藏对话文本 */
+    opacity: 0;
 }
 
 /* 思考和继续指示器 */
@@ -181,7 +182,6 @@ body:not(.speaking) #dialog-text {
     font-weight: bold;
     color: #0b4a7a;
 }
-/* 【核心修改】发送/继续按钮 */
 #continue-indicator {
     position: absolute;
     bottom: 15px;
@@ -190,17 +190,109 @@ body:not(.speaking) #dialog-text {
     color: #0b4a7a;
     cursor: pointer;
     transition: transform 0.2s ease, color 0.2s ease;
-    z-index: 15; /* 比输入框更高 */
+    z-index: 15;
 }
 #continue-indicator:hover {
     transform: scale(1.2);
     color: #5aa9e6;
 }
-#continue-indicator.hidden { display: none !important; }
 
-/* 禁用状态 */
-.disabled { 
+/* 禁用与隐藏 */
+.disabled {
     pointer-events: none;
     opacity: 0.6;
 }
 .hidden { display: none !important; }
+
+
+/* ===== 移动端适配 (增强版) ===== */
+@media (max-width: 768px) {
+    /* 整体UI边距调整 */
+    #ui-layer {
+        padding: 2vh 2vw; /* 减小左右边距 */
+    }
+
+    /* 立绘调整，避免与对话框和底部边缘过于拥挤 */
+    #character-layer {
+        bottom: 15vh; /* 进一步抬高，为对话框留出更多空间 */
+        /* 确保立绘不会遮挡到顶部的按钮 */
+        top: auto;
+        height: 85vh;
+    }
+    #character-sprite {
+        max-height: 65vh; /* 限制最大高度，防止过高 */
+        max-width: 80vw; /* 可以适当放宽宽度限制 */
+    }
+
+    /* 顶部控制栏调整 */
+    #top-controls {
+        /* 将其从水平居中改为靠左，避免与可能存在的刘海屏冲突 */
+        left: 15px;
+        transform: translateX(0);
+        /* 如果按钮过多，允许横向滚动 */
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        /* 隐藏滚动条 */
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none;  /* Firefox */
+    }
+    #top-controls::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, and Opera */
+    }
+    .control-group {
+        padding: 6px 10px; /* 减小内边距 */
+    }
+    #top-controls button, #top-controls input {
+        font-size: 13px; /* 略微减小字体 */
+    }
+    #time-input {
+        width: 100px; /* 减小输入框宽度 */
+    }
+
+
+    /* 对话框优化 */
+    #dialog-box {
+        width: 100%; /* 在移动端占满宽度 */
+        max-width: none; /* 移除桌面端的最大宽度限制 */
+        border-radius: 10px;
+        margin-bottom: 0; /* 移除外边距，由ui-layer的padding控制 */
+        /* 略微降低毛玻璃效果的透明度，增强可读性 */
+        background-color: rgba(255, 255, 255, 0.6);
+    }
+
+    /* 对话框头部 */
+    #dialog-header {
+        padding: 10px 15px;
+    }
+    #speaker-name {
+        font-size: 18px; /* 减小姓名大小 */
+    }
+    #emotion-tag {
+        padding: 3px 10px;
+        font-size: 12px; /* 减小情绪标签大小 */
+    }
+
+
+    /* 对话框内容 */
+    #dialog-content {
+        min-height: 120px;
+        padding: 15px;
+    }
+    #dialog-text, #user-input {
+        font-size: 16px; /* 调整为更适合移动阅读的字体大小 */
+        line-height: 1.6;
+    }
+
+    /* 输入框 */
+    #user-input {
+        /* 适配对话框的内边距 */
+        padding: 15px 50px 15px 15px;
+    }
+
+    /* 发送/继续按钮 */
+    #continue-indicator {
+        bottom: 10px;
+        right: 15px;
+        font-size: 22px; /* 调整大小 */
+    }
+}

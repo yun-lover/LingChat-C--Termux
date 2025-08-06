@@ -149,20 +149,10 @@ std::vector<float> AIEngine::getEmbeddings(const std::string& text) {
         {"model", embedding_model_},
         {"input", text}
     };
-    
-    std::string full_url = embedding_api_url_;
-    // 许多API的endpoint是 /embeddings，但有些可能直接就是基础URL。
-    // 为提高兼容性，我们假设基础URL后可能需要拼接/embeddings
-    // 更稳健的做法是让用户在.env中配置完整的URL
-    if (full_url.find("/embeddings") == std::string::npos) {
-         if (full_url.back() != '/') {
-            full_url += "/";
-        }
-        full_url += "embeddings";
-    }
 
     // 使用专门的 embeddingHttpClient_
-    std::string response_str = embeddingHttpClient_.post(full_url, payload.dump());
+    std::string response_str = embeddingHttpClient_.post(embedding_api_url_ + "/embeddings", payload.dump());
+    Logger::logInfo("Embedding API response: " + response_str);
 
     try {
         auto response_json = nlohmann::json::parse(response_str);

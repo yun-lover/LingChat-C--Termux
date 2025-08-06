@@ -62,6 +62,7 @@ std::string HTTPClient::sendRequest(const std::string& url, const std::string& m
         chunk = curl_slist_append(chunk, header.c_str());
     }
     curl_easy_setopt(curl_, CURLOPT_HTTPHEADER, chunk);
+    // For development/testing only: disable SSL certificate verification
     curl_easy_setopt(curl_, CURLOPT_SSL_VERIFYPEER, 0L);
     curl_easy_setopt(curl_, CURLOPT_SSL_VERIFYHOST, 0L);
     CURLcode res = curl_easy_perform(curl_);
