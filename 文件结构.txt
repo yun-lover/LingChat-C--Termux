@@ -1,4 +1,4 @@
-~/chat $ tree
+❯ tree
 .
 ├── backend
 │   ├── include
@@ -6,6 +6,7 @@
 │   │   ├── ConfigManager.hpp
 │   │   ├── HTTPClient.hpp
 │   │   ├── Logger.hpp
+│   │   ├── MemoryManager.hpp
 │   │   ├── SessionManager.hpp
 │   │   ├── WebSocketServer.hpp
 │   │   ├── civetweb.c
@@ -15,6 +16,7 @@
 │       ├── ConfigManager.cpp
 │       ├── HTTPClient.cpp
 │       ├── Logger.cpp
+│       ├── MemoryManager.cpp
 │       ├── SessionManager.cpp
 │       ├── WebSocketServer.cpp
 │       ├── civetweb.c
@@ -41,6 +43,7 @@
 │   │   ├── ConfigManager.d
 │   │   ├── HTTPClient.d
 │   │   ├── Logger.d
+│   │   ├── MemoryManager.d
 │   │   ├── SessionManager.d
 │   │   ├── WebSocketServer.d
 │   │   ├── civetweb.d
@@ -50,6 +53,7 @@
 │       ├── ConfigManager.o
 │       ├── HTTPClient.o
 │       ├── Logger.o
+│       ├── MemoryManager.o
 │       ├── SessionManager.o
 │       ├── WebSocketServer.o
 │       ├── civetweb.o
@@ -73,9 +77,9 @@
 │   ├── index.html
 │   └── style.css
 ├── makefile
+├── memory.json
 ├── prompt.txt
 ├── readme.md
 └── 文件结构.txt
 
-13 directories, 64 files
-~/chat $
+13 directories, 69 files
