@@ -1,6 +1,7 @@
 # LingChat-C++-Termux
    本应用现仅在termux环境中编译和运行过，其他linux环境请自行修改makefile中的库名，以及依赖库、库的路径等  
    本项目是LingChat的二创，有兴趣的可以前往LingChat的仓库(https://github.com/SlimeBoyOwO/LingChat)  
+   欢迎前往博客获得更好的观感[博客链接](https://yun-lover.github.io/2025/08/06/first/)
 ## 一、编译和运行
 ### 1.工具链安装
    首先我们需要安装编译的工具链以及依赖库
